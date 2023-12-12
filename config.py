@@ -18,9 +18,11 @@ def create_app():
         title="DRY API",
         version="1.0",
         docs_ui="elements",
-        spec_plugins=[MarshmallowPlugin(), TitlesPlugin()]
+        spec_plugins=[MarshmallowPlugin(), TitlesPlugin()],
     )
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{Path(__file__).parent.absolute()}/database.db"
+    app.config[
+        "SQLALCHEMY_DATABASE_URI"
+    ] = f"sqlite:///{Path(__file__).parent.absolute()}/database.db"
 
     db.init_app(app)
     with app.app_context():

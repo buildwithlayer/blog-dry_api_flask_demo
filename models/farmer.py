@@ -11,13 +11,16 @@ from models.crop import Crop
 
 class Farmer(BaseModel):
     name: Mapped[str] = mapped_column(
-        String, nullable=False,
+        String,
+        nullable=False,
     )
 
     # --- RELATIONSHIPS ---
     chickens: Mapped[List[Chicken]] = relationship(
-        "Chicken", cascade="all, delete",
+        "Chicken",
+        cascade="all, delete",
     )
     crops: Mapped[List[Crop]] = relationship(
-        "Crop", cascade="all, delete",
+        "Crop",
+        cascade="all, delete",
     )

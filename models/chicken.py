@@ -1,6 +1,6 @@
 import enum
 
-from sqlalchemy import Integer, Enum, ForeignKey
+from sqlalchemy import Enum, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 
 # Local Imports
@@ -14,11 +14,14 @@ class Sex(enum.Enum):
 
 class Chicken(BaseModel):
     farmer_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("farmer.id", ondelete="CASCADE"),
+        Integer,
+        ForeignKey("farmer.id", ondelete="CASCADE"),
     )
     age: Mapped[int] = mapped_column(
-        Integer, nullable=False,
+        Integer,
+        nullable=False,
     )
     sex: Mapped[Sex] = mapped_column(
-        Enum(Sex), nullable=False,
+        Enum(Sex),
+        nullable=False,
     )

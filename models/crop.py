@@ -1,4 +1,4 @@
-from sqlalchemy import String, Integer, Float, ForeignKey
+from sqlalchemy import Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 # Local Imports
@@ -7,16 +7,21 @@ from models.base import BaseModel
 
 class Crop(BaseModel):
     farmer_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("farmer.id", ondelete="CASCADE"), nullable=False,
+        Integer,
+        ForeignKey("farmer.id", ondelete="CASCADE"),
+        nullable=False,
     )
     type: Mapped[str] = mapped_column(
-        String, nullable=False,
+        String,
+        nullable=False,
     )
     days_to_mature: Mapped[int] = mapped_column(
-        Integer, nullable=False,
+        Integer,
+        nullable=False,
     )
     acres: Mapped[float] = mapped_column(
-        Float, nullable=False,
+        Float,
+        nullable=False,
     )
 
     # --- METADATA ---

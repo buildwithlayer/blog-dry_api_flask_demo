@@ -16,13 +16,19 @@ class BaseMeta(object):
 
 class BaseModel(db.Model):
     id: Mapped[int] = mapped_column(
-        Integer, primary_key=True,
+        Integer,
+        primary_key=True,
     )
     created_at: Mapped[DateTime] = mapped_column(
-        DateTime, nullable=False, server_default=func.now(),
+        DateTime,
+        nullable=False,
+        server_default=func.now(),
     )
     updated_at: Mapped[DateTime] = mapped_column(
-        DateTime, nullable=False, server_default=func.now(), onupdate=func.now(),
+        DateTime,
+        nullable=False,
+        server_default=func.now(),
+        onupdate=func.now(),
     )
 
     # --- METADATA ---
@@ -46,9 +52,7 @@ class BaseModel(db.Model):
         if not hasattr(nested_class, "make_schema"):
             raise TypeError(f"Unexpected nested type [{type(nested_class).__name__}]")
 
-        schema_kwargs[attr_name] = fields.Nested(
-            nested_class.make_schema()(many=many)
-        )
+        schema_kwargs[attr_name] = fields.Nested(nested_class.make_schema()(many=many))
 
     @classmethod
     def get_enum(cls, attr_name: str) -> Optional[Type[Enum]]:
@@ -60,11 +64,15 @@ class BaseModel(db.Model):
         return getattr(attr_type, "enum_class", None)
 
     @classmethod
-    def enum_attribute(cls, attr_name: str, enum_class: Type[Enum], schema_kwargs: dict):
+    def enum_attribute(
+        cls, attr_name: str, enum_class: Type[Enum], schema_kwargs: dict
+    ):
         schema_kwargs[attr_name] = fields.Enum(enum_class)
 
     @classmethod
-    def make_schema(cls, overrides: Optional[Dict[str, fields.Field]] = None) -> type(SQLAlchemyAutoSchema):
+    def make_schema(
+        cls, overrides: Optional[Dict[str, fields.Field]] = None
+    ) -> type(SQLAlchemyAutoSchema):
         if cls.__schema__ is not None:
             return cls.__schema__
 
@@ -76,9 +84,7 @@ class BaseModel(db.Model):
         }
         meta_class = type("Meta", (BaseMeta,), meta_kwargs)
 
-        schema_kwargs = {
-            "Meta": meta_class
-        }
+        schema_kwargs = {"Meta": meta_class}
         schema_name = f"{cls.__name__}Schema"
 
         for attr_name in cls.__dict__:

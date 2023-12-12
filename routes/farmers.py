@@ -1,12 +1,10 @@
-from apiflask import HTTPError, APIBlueprint
+from apiflask import APIBlueprint, HTTPError
 
 # Local Imports
 from models.farmer import Farmer
 from schemas.farmer import FarmerSchema
 
-farmers_bp = APIBlueprint(
-    "farmers", __name__, enable_openapi=True
-)
+farmers_bp = APIBlueprint("farmers", __name__, enable_openapi=True)
 
 
 @farmers_bp.get("/<int:farmer_id>")
