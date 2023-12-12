@@ -2,7 +2,7 @@ from sqlalchemy import Integer, DateTime, String, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 # Local Imports
-from config import db
+from config import db, marsh
 
 
 class Farmer(db.Model):
@@ -18,3 +18,8 @@ class Farmer(db.Model):
     name: Mapped[str] = mapped_column(
         String, nullable=False,
     )
+
+
+class FarmerSchema(marsh.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Farmer

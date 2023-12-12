@@ -1,9 +1,11 @@
 from pathlib import Path
 
 from apiflask import APIFlask
+from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+marsh = Marshmallow()
 
 
 def create_app():
@@ -13,5 +15,6 @@ def create_app():
     db.init_app(app)
     with app.app_context():
         db.create_all()
+    marsh.init_app(app)
 
     return app
