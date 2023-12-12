@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Optional, Type
+from typing import Optional, Type, Dict
 
 from marshmallow import fields
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
@@ -64,9 +64,12 @@ class BaseModel(db.Model):
         schema_kwargs[attr_name] = fields.Enum(enum_class)
 
     @classmethod
-    def make_schema(cls) -> type(SQLAlchemyAutoSchema):
+    def make_schema(cls, overrides: Optional[Dict[str, fields.Field]] = None) -> type(SQLAlchemyAutoSchema):
         if cls.__schema__ is not None:
             return cls.__schema__
+
+        if overrides is None:
+            overrides = dict()
 
         meta_kwargs = {
             "model": cls,
@@ -79,7 +82,9 @@ class BaseModel(db.Model):
         schema_name = f"{cls.__name__}Schema"
 
         for attr_name in cls.__dict__:
-            if (prop := cls.get_relationship(attr_name)) is not None:
+            if attr_name in overrides:
+                schema_kwargs[attr_name] = overrides[attr_name]
+            elif (prop := cls.get_relationship(attr_name)) is not None:
                 cls.nest_attribute(attr_name, prop, schema_kwargs)
             elif (enum_class := cls.get_enum(attr_name)) is not None:
                 cls.enum_attribute(attr_name, enum_class, schema_kwargs)
