@@ -5,12 +5,21 @@ from apispec_oneofschema import MarshmallowPlugin
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
 
+# Local Imports
+from plugins.titles_plugin import TitlesPlugin
+
 db = SQLAlchemy()
 marsh = Marshmallow()
 
 
 def create_app():
-    app = APIFlask(__name__, title="DRY API", version="1.0", docs_ui="elements", spec_plugins=[MarshmallowPlugin()])
+    app = APIFlask(
+        __name__,
+        title="DRY API",
+        version="1.0",
+        docs_ui="elements",
+        spec_plugins=[MarshmallowPlugin(), TitlesPlugin()]
+    )
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{Path(__file__).parent.absolute()}/database.db"
 
     db.init_app(app)
