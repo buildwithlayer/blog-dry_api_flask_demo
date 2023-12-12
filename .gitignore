@@ -1,0 +1,4 @@
+/instance/
+/.idea/
+/.venv/
+/database.db
