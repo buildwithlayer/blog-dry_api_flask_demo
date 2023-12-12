@@ -22,6 +22,3 @@ class Chicken(BaseModel):
     sex: Mapped[Sex] = mapped_column(
         Enum(Sex), nullable=False,
     )
-
-
-ChickenSchema = Chicken.make_schema()
