@@ -14,3 +14,13 @@ def get_farmer_by_id(farmer_id: int):
     if farmer is None:
         raise HTTPError(404, message="Farmer not found")
     return farmer
+
+# @farmers_bp.post("/")
+# @farmers_bp.input(FarmerSchema)
+# @farmers_bp.input(FarmerSchema, location="json", arg_name="farmer")
+# @farmers_bp.output(FarmerSchema)
+# def create_farmer(farmer: FarmerSchema):
+#     farmer = Farmer.query.where(Farmer.id == farmer_id).first()
+#     if farmer is None:
+#         raise HTTPError(404, message="Farmer not found")
+#     return farmer
