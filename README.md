@@ -16,5 +16,5 @@ pip install -r requirements.txt
 ## Run
 
 ```shell
-run --port 8080 --reload
+flask run --port 8080 --reload
 ```

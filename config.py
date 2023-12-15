@@ -2,6 +2,7 @@ from pathlib import Path
 
 from apiflask import APIFlask
 from apispec_oneofschema import MarshmallowPlugin
+from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
 
@@ -28,5 +29,7 @@ def create_app():
     with app.app_context():
         db.create_all()
     marsh.init_app(app)
+
+    CORS(app, origins="*")
 
     return app
