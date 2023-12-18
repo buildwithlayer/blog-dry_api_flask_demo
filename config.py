@@ -18,7 +18,7 @@ def create_app():
         __name__,
         title="DRY API",
         version="1.0",
-        docs_ui="elements",
+        docs_ui="swagger-ui",
         spec_plugins=[MarshmallowPlugin(), TitlesPlugin()],
     )
     app.config[
